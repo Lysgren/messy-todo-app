@@ -1,74 +1,74 @@
 const crud = require('../models/crud.js')
 
 const GetTodoLists = (req, res) => {
+  
   crud.GetTodoLists()
   .then(result => res.json(result))
   .catch(error => res.json(error))
 }
 
-const CreateNewTodolist = (req, res) => {
+const CreateNewTodolist = (req, res, next) => {
   const {title, color} = req.body
-  if(!(title || color)){
-    return res.status(400).json({error: "Invalid body"})
-  }
 
   crud.CreateNewTodolist(title, color)
   .then(result => res.json(result))
-  .catch(error => res.json(error))
+  .catch(error => next(error))
 }
 
-const CreateNewTodo = (req, res) => {
+const CreateNewTodo = (req, res, next) => {
   const {todoListID, content} = req.body
-  if (!(todoListID || content)){
-    return res.status(400).json({error: 'Invalid body'})
-  }
-  crud.CreateNewTodo()
+
+  crud.CreateNewTodo(todoListID, content)
   .then(result => res.json(result))
-  .catch(error => res.json(error))
+  .catch(error => next(error))
 }
 
-const GetSingleTodo = (req, res) => {
+const GetSingleTodo = (req, res, next) => {
   const {id} = req.body
-  if(!id){ 
-    return res.status(400).json({error: 'Invalid body'})
-  }
 
-  crud.GetSingleTodo()
+  crud.GetSingleTodo(id)
   .then(result => res.json(result))
-  .catch(error => res.json(error))
+  .catch(error => next(error))
 }
 
-const UpdateTodoList = (req, res) => {
+const UpdateTodoList = (req, res, next) => {
   const {id, title, color} = req.body
-  if (!(id || title || color)){
-    return res.status(400).json({error: 'Invalid body'})
-  }
 
-  crud.UpdateTodoList()
+  crud.UpdateTodoList(id, title, color)
   .then(result => res.json(result))
-  .catch(error => res.json(error))
+  .catch(error => next(error))
 }
 
-const UpdateTodo = (req, res) => {
+const UpdateTodo = (req, res, next) => {
   const {id, content, done} = req.body    
-  if (!(id || content || done)){ 
-    return res.status(400).json({error: "Invalid body"})
-  }
 
-  crud.UpdateTodo()
+  crud.UpdateTodo(content, done, id)
   .then(result => res.json(result))
-  .catch(error => res.json(error))
+  .catch(error => next(error))
 }
 
-const DeleteTodoList = (req, res) => {
+const DeleteTodoList = (req, res, next) => {
   const {id} = req.body
-  if (!id){
-    return res.status(400).json({error: 'Invalid body, missing id'})
-  }
 
-  crud.DeleteTodoList()
+  crud.DeleteTodoList(id)
   .then(result => res.json(result))
-  .catch(error => res.json(error))
+  .catch(error => next(error))
+}
+
+const DeleteTodo = (req, res, next) => {
+  const {id} = req.body
+
+  crud.DeleteTodo(id)
+  .then(result => res.json(result))
+  .catch(error => next(error))
+}
+
+const NothingFoundGet = (req, res) => {
+    res.status(404).json({error: '404: Page not Found'})
+}
+
+const NothingFoundPost = (req, res) => {
+  res.status(404).json({error: '404: Could not post'})
 }
 
 module.exports = {
@@ -78,5 +78,8 @@ module.exports = {
   GetSingleTodo,
   UpdateTodoList,
   UpdateTodo,
-  DeleteTodoList
+  DeleteTodoList,
+  DeleteTodo,
+  NothingFoundGet,
+  NothingFoundPost
 }

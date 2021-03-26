@@ -25,6 +25,7 @@ app.get('/alltodolists', (req, res) => {
   })
 })
 
+
 app.post('/newtodolist', (req, res) => {
   const {title, color} = req.body
   if(!(title || color)){

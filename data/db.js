@@ -1,7 +1,9 @@
 const sqlite = require('sqlite3')
 const db = new sqlite.Database("todos.db")
 
+/* 
 db.serialize(() => {
+  
   db.run("DROP TABLE IF EXISTS todo_lists")
   db.run("DROP TABLE IF EXISTS todos")
   db.run(`CREATE TABLE "todo_lists" ("id"	INTEGER,"title"	TEXT NOT NULL,"color"	TEXT NOT NULL DEFAULT 'white',PRIMARY KEY("id" AUTOINCREMENT));`)
@@ -22,4 +24,5 @@ db.serialize(() => {
   db.run(`INSERT INTO todos(content, done, todo_list_id) VALUES ("Läsa bok", 1, 2)`)
 })
 
+ */
 module.exports = db
