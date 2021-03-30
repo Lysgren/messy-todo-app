@@ -3,5 +3,4 @@ const HandleRequest = (req, res, next) => {
   next()
 }
 
-
 module.exports = { HandleRequest }

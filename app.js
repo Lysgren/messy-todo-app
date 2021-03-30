@@ -5,7 +5,8 @@ const PORT = process.env.PORT || 8080
 
 const middleware = require ('./middleware/middleware.js')
 const errorHandle = require ('./errors/errors.js')
-const routes = require ('./routes/routes.js')
+// const routes = require ('./routes/routes.js')
+const routes = require ('./routes/newRoutes.js')
 
 app.use(express.json())
 
